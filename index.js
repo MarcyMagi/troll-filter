@@ -1,5 +1,3 @@
-console.clear()
-
 const twitchReq = require('./twitch/requests')
 const server = require('./server/server')
 const twitchTokens = require('./config/config')
