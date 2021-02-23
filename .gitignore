@@ -1,0 +1,3 @@
+node_modules/
+server/infrastructure/sqlite3Test/
+*.sql
