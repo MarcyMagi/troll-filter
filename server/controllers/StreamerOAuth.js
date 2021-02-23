@@ -23,6 +23,7 @@ module.exports = app => {
                 dbTables.selectFromStreamer(streamerInfo.user_id)
                 .then(user => {
                     console.log(user)
+                    res.send('Ok!')
                 })
 
             }).catch(config.defaultErr)

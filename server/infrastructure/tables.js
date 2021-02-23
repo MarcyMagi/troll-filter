@@ -1,7 +1,6 @@
 const createTablesStr = 
 	`CREATE TABLE IF NOT EXISTS streamUser (
 		twitch_id int PRIMARY KEY,
-		name nvarchar(255) UNIQUE NOT NULL,
 		access_token nvarchar(255) UNIQUE NOT NULL,
 		refresh_token nvarchar(255) UNIQUE NOT NULL
 	);
@@ -9,9 +8,7 @@ const createTablesStr =
 	
 	CREATE TABLE IF NOT EXISTS playerUser (
 		twitch_id int PRIMARY KEY,
-		twitch_name nvarchar(255) UNIQUE NOT NULL,
 		discord_id int UNIQUE NOT NULL,
-		discord_name nvarchar(255) UNIQUE NOT NULL
 	);
 	
 	
@@ -57,8 +54,8 @@ module.exports = {
 	},
 
 	insertIntoStreamer: (OAuth, user) => {
-		const streamTableInsert = [user.user_id, user.login, OAuth.access_token, OAuth.refresh_token]
-		const sql = 'INSERT INTO streamUser(twitch_id, name, access_token, refresh_token) VALUES(?, ?, ?, ?)'
+		const streamTableInsert = [user.user_id, OAuth.access_token, OAuth.refresh_token]
+		const sql = 'INSERT OR REPLACE INTO streamUser(twitch_id, access_token, refresh_token) VALUES(?, ?, ?)'
 
 		this.db.serialize(() => {
 
@@ -73,12 +70,16 @@ module.exports = {
 	selectFromStreamer: twitch_id => {
 		return new Promise((resolve, reject) => {
 			this.db.serialize(() => {
-				this.db.each(`SELECT * FROM streamUser WHERE twitch_id = ?`, [twitch_id],  (err, row) => {
+
+				this.db.all(`SELECT * FROM streamUser WHERE twitch_id = ?`, [twitch_id],  (err, rows) => {
+
 					if(!err)
-						resolve(row)
+						resolve(rows[0])
+
 					else
 						reject(err)
-				}) 
+				})
+
 			})
 		})
 

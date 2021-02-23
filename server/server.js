@@ -9,11 +9,9 @@ module.exports = {
 
         dbConnection.then((res) => {
             dbTables.connection(res)
-
-            dbTables.dropTables()
+            
             dbTables.createTables()
             
-    
             app = customExpress()
             app.listen(3000, () => {
                 console.log('Server Running')
