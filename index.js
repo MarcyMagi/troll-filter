@@ -4,8 +4,8 @@ const twitchTokens = require('./config/config')
 
 twitchReq.createClientToken().then(res => {
 
-    twitchTokens.clientOAuth(res.token)
-    server.init()
+	twitchTokens.clientOAuth(res.token)
+	server.init()
 
-    console.log(`\n\n${res.OAuthURL}\n`)
+	console.log(`\n\n${res.OAuthURL}\n`)
 })
