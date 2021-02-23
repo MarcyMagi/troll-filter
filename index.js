@@ -1,5 +1,5 @@
 const twitchReq = require('./twitch/requests')
-const server = require('./server/server')
+const server = require('./server')
 const twitchTokens = require('./config/config')
 
 twitchReq.createClientToken().then(res => {

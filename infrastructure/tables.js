@@ -32,7 +32,6 @@ const dropTableStr =
 
 	DROP TABLE IF EXISTS streamerPlayerRel;`
 
-let db
 
 module.exports = {
 	connection: db => {
@@ -48,7 +47,7 @@ module.exports = {
 	},
 
 	dropTables: () => {
-	   this.db.serialize(() => {
+		this.db.serialize(() => {
 			this.db.run(dropTableStr)
 		})
 	},
@@ -71,7 +70,7 @@ module.exports = {
 		return new Promise((resolve, reject) => {
 			this.db.serialize(() => {
 
-				this.db.all(`SELECT * FROM streamUser WHERE twitch_id = ?`, [twitch_id],  (err, rows) => {
+				this.db.all('SELECT * FROM streamUser WHERE twitch_id = ?', [twitch_id],  (err, rows) => {
 
 					if(!err)
 						resolve(rows[0])

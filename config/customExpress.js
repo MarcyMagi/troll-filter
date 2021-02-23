@@ -5,14 +5,14 @@ const bodyPaser = require('body-parser')
 module.exports = () => { 
 
 
-    const app = express()
+	const app = express()
 
-    app.use(bodyPaser.json())
+	app.use(bodyPaser.json())
 
-    consign()
-        .include("server/controllers")
-        .into(app)
+	consign()
+		.include('controllers')
+		.into(app)
 
-    return app
+	return app
 }
 
