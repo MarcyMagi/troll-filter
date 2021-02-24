@@ -1,6 +1,6 @@
 
-const config = require('../config/config')
-const twitchRequest = require('../twitch/requests')
+const config = require('../config/settings')
+const twitchRequest = require('../requests/streamer')
 const dbTables = require('../infrastructure/tables')
 
 module.exports = app => {
@@ -9,7 +9,7 @@ module.exports = app => {
 			return
 		}
 
-		twitchRequest.createStreamerToken(req.query.code)
+		twitchRequest.createToken(req.query.code)
 			.then(streamerOAuth => {
 
 				console.log(streamerOAuth)
@@ -23,11 +23,16 @@ module.exports = app => {
 					dbTables.selectFromStreamer(streamerInfo.user_id)
 						.then(user => {
 							console.log(user)
-							res.send('Ok!')
-						})
+							if(user)
+								res.send('Ok!')
+							else
+								res.send('Rip')
+						}).catch(err => config.defaultErr(err))
 
-				}).catch(config.defaultErr)
-			}).catch(config.defaultErr)
+				}).catch(err => config.defaultErr(err))
+			}).catch(err => config.defaultErr(err))
 	})
+
+	app.get('/registerUser')
 
 }

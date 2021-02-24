@@ -3,10 +3,25 @@
         "clientId": "7ut0fk3wl2mgi8egrnq5yhy4fkmebh",
         "streamerOAuth": {
             "redirect": "http://localhost:3000/registerStreamerOAuth",
-            "response_type": "code",
             "scope" : [
                 "channel:read:redemptions"
             ]
+        },
+        "userOAuth": {
+            "redirect": "http://localhost:3000/registerViewerOAuth/Twitch",
+            "scope" : []
         }
+    },
+
+    "discord": {
+        "clientId": "813547659884625951",
+        "redirect": "http://localhost:3000/registerViewerOAuth/Discord",
+        "scope" : [
+            "connections",
+            "email",
+            "identify",
+            "guilds"
+        ]
     }
+
 }

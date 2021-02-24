@@ -1,11 +1,16 @@
-const twitchReq = require('./twitch/requests')
+const twitchClient = require('./requests/client')
+const twitchStreamer = require('./requests/streamer')
+const twitchViewer = require('./requests/viewer')
 const server = require('./server')
-const twitchTokens = require('./config/config')
+const twitchTokens = require('./config/settings')
 
-twitchReq.createClientToken().then(res => {
+twitchClient.createClientToken().then(token => {
 
-	twitchTokens.clientOAuth(res.token)
+	console.log(
+		'Streamer OAuth: ' + twitchStreamer.OAuthURL + token + '\n\n' +
+		'Viewer OAuth Twitch: ' + twitchViewer.OAuthURLTwitch + token + '\n\n' +
+		'Viewer OAuth Discord: ' + twitchViewer.OAuthURLDiscord + '\n---\n\n')
+	twitchTokens.clientOAuth(token)
 	server.init()
 
-	console.log(`\n\n${res.OAuthURL}\n`)
 })
